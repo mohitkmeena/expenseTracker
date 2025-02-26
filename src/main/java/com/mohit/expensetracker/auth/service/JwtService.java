@@ -46,16 +46,17 @@ public class JwtService {
         byte [] bytes=Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(bytes);
      }
-      public String generateToken(UserDetails userDetails){
-         return generateToken(new HashMap<>(),userDetails);
+      public String generateToken(String username){
+        System.out.println("generating token");
+         return generateToken(new HashMap<>(),username);
              }
          
-    private String generateToken(Map<String,Object> extraclaims, UserDetails userDetails) {
+    private String generateToken(Map<String,Object> extraclaims, String username) {
                 extraclaims=new HashMap<>(extraclaims);
-                extraclaims.put("role", userDetails.getAuthorities());
+                
                 return Jwts.builder()
                 .setClaims(extraclaims)
-                .setSubject(userDetails.getUsername())
+                .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+EXPIRATION))
                 .signWith(key(), SignatureAlgorithm.HS256)

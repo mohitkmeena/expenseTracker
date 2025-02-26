@@ -20,5 +20,9 @@ public class GlobalExceptionHandler {
     public ProblemDetail handleTokenNotFound(TokenExpiredException ex){
         return ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR,ex.getMessage());
     }
+    @ExceptionHandler(ForgetPasswordReqException.class)
+    public ProblemDetail handlePasswordReset(ForgetPasswordReqException ex){
+        return ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR,ex.getMessage());
+    }
     
 }

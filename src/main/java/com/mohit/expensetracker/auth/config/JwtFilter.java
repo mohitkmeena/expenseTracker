@@ -2,13 +2,14 @@ package com.mohit.expensetracker.auth.config;
 
 import java.io.IOException;
 
-import org.apache.catalina.core.ApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.mohit.expensetracker.auth.service.JwtService;
@@ -20,11 +21,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotNull;
 
+@Component
 public class JwtFilter extends OncePerRequestFilter {
     @Autowired
     private JwtService jwtService;
     @Autowired
-    private UserDetailsImpl userDetailsImpl;
+    private ApplicationContext context;
     @Override
     protected void doFilterInternal( @NotNull HttpServletRequest request,
                                      @NotNull HttpServletResponse response,
@@ -41,7 +43,7 @@ public class JwtFilter extends OncePerRequestFilter {
      
       
         if(username!=null && SecurityContextHolder.getContext().getAuthentication()!=null){
-            UserDetails userDetails=userDetailsImpl.loadUserByUsername(username);
+            UserDetails userDetails=context.getBean(UserDetailsImpl.class).loadUserByUsername(username);
             if(jwtService.isTokenValid(token, userDetails)){
                 UsernamePasswordAuthenticationToken authToken=new UsernamePasswordAuthenticationToken( userDetails,null,userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

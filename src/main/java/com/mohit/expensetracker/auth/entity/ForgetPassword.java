@@ -1,6 +1,6 @@
 package com.mohit.expensetracker.auth.entity;
 
-import java.time.Instant;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,32 +10,32 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+@Builder
 @Entity
-@Table
-@AllArgsConstructor
-@RequiredArgsConstructor
 @Getter
 @Setter
-@Builder
-public class RefreshToken {
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Table(name = "forget_password")
+
+public class ForgetPassword {
     @Id
-    @Column(name="refresht_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer tokenId;
-    @Column(name="token")
-    @NotBlank(message = "please enter refresh token value")
-    
-    private String token;
-    @Column(name="exptime",nullable=false)
-    private Instant expirationtime;
+    private Integer id;
     @OneToOne
-    @JoinColumn(name="userid",referencedColumnName="userid")
+    @JoinColumn(
+        name = "email",referencedColumnName = "email"
+    )
     private User user;
+    @Column(nullable=false,name = "otp")
+    private Integer otp;
+    @Column(nullable = false)
+    private Date expirationTime;
+
 }

@@ -27,12 +27,16 @@ public class RefreshTokenService {
 
     public RefreshToken createRefreshToken(String username){
         User user=userRepository.findByUsername(username).orElseThrow(()->new UserNotFoundException("user not found with given username "+username ));
-       RefreshToken refreshToken=  RefreshToken .builder()
+       RefreshToken refreshToken=  refreshTokenRepository.getByUser(user);
+       if(refreshToken==null){
+       refreshToken= RefreshToken .builder()
        .user(user)
        .expirationtime(Instant.now().plusMillis(REFRESH_TOKEN_EXPIRATION))
-       .token(UUID.randomUUID().toString())
+       .token(UUID.randomUUID().toString()+Instant.now())
        .build();
-      refreshTokenRepository.save(refreshToken);
+       refreshTokenRepository.save(refreshToken);
+       }
+     
       return refreshToken;
     }
 
