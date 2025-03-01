@@ -22,7 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Data
-@Builder
+
 public class UserDto extends User {
     private String firstName;
     private String lastName;

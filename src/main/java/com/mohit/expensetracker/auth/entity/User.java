@@ -29,7 +29,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class User {
+public class
+User {
     @Id
     @GeneratedValue(strategy=GenerationType.UUID)
     @Column(name = "userid")
