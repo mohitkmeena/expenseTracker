@@ -66,6 +66,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>userservice</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -91,6 +92,27 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>com.mohit.userServices.UserServicesApplication</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>3.5.0</version>
+						<configuration>
+							<mainClass>com.mohit.userServices.UserServicesApplication</mainClass>
+						</configuration>
+					</plugin>
+
+
 		</plugins>
 	</build>
 
