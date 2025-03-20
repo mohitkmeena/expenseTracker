@@ -22,12 +22,12 @@ public class SecurityConfig {
    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
    
 
-    return httpSecurity.csrf(customizer->customizer.disable())
-    .authorizeRequests(auth->auth
-                         .requestMatchers("/api/v1/auth/**").permitAll()
-                         .requestMatchers("/api/v1/token/**").permitAll()
-                         .requestMatchers("/api/v1/password/**").permitAll()
-                        .anyRequest().authenticated())
+    return httpSecurity.csrf(customizer -> customizer.disable())
+            .authorizeHttpRequests(auth -> auth
+                    .requestMatchers("/api/v1/auth/**").permitAll()
+                    .requestMatchers("/api/v1/token/**").permitAll()
+                    .requestMatchers("/api/v1/password/**").permitAll()
+                    .anyRequest().authenticated())
     .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
     .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
     .build();

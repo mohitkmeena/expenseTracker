@@ -1,6 +1,7 @@
 package com.mohit.expensetracker.auth.service;
 
 import java.util.HashSet;
+import java.util.Optional;
 
 import com.mohit.expensetracker.auth.eventProducer.UserEventInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,5 +59,8 @@ public class UserDetailsImpl implements UserDetailsService  {
                 .lastName(user.getLastName())
                 .phoneNumber(user.getPhoneNumber())
                 .build();
+    }
+    public   String getUserIdByUsername(String username){
+        return userRepository.findByUsername(username).map(User::getUserid).orElse(null);
     }
 }
