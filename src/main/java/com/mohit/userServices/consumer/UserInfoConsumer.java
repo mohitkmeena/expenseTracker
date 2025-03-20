@@ -25,6 +25,7 @@ public class UserInfoConsumer {
         System.out.println("consumes "+eventdata.toString());
 
         try{
+            System.out.println("consuming the data");
             userService.createOrUpdateUser(eventdata);
 
         }

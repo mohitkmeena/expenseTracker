@@ -10,8 +10,7 @@ import jakarta.persistence.Id;
 import lombok.*;
 
 @AllArgsConstructor
-@RequiredArgsConstructor
-@Entity
+@NoArgsConstructor
 @Getter
 @Setter
 @Builder
@@ -36,6 +35,6 @@ public class UserInfoDto {
 
     public  UserInfo transferToUserInfo(){
 
-        return  UserInfo.builder().userId(userId).firstName(firstName).lastName(lastName).email(email).phoneNumber(phoneNumber).profilePic(profilePic).build();
+        return  UserInfo.builder().userId(this.userId).firstName(this.firstName).lastName(this.lastName).email(this.email).phoneNumber(this.phoneNumber).profilePic(this.profilePic).build();
     }
 }

@@ -22,6 +22,12 @@ public class UserService {
     public UserInfoDto createOrUpdateUser(UserInfoDto userInfoDto){
         Function<UserInfo,UserInfo> updatingUser=user->{
             //TODO :Implement the update
+                user.setUserId(userInfoDto.getUserId());
+                user.setEmail(userInfoDto.getEmail());
+                user.setFirstName(userInfoDto.getFirstName());
+                user.setLastName(userInfoDto.getLastName());
+                user.setPhoneNumber(userInfoDto.getPhoneNumber());
+                user.setProfilePic(userInfoDto.getProfilePic());
                  return userRepository.save(user);
          };
         Supplier<UserInfo> createUser=()->{
