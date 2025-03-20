@@ -1,7 +1,8 @@
-package com.mohit.expenseservice.controller.java;
+package com.mohit.expenseservice.controller;
 
 import com.mohit.expenseservice.dto.ExpenseDto;
 import com.mohit.expenseservice.service.ExpenseService;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ public class ExpenseController {
     @Autowired private ExpenseService expenseService;
 
     @GetMapping("/expenses")
-    public ResponseEntity<List<ExpenseDto> >getAllExpenses(@RequestParam("userId") String userId){
+    public ResponseEntity<List<ExpenseDto> >getAllExpenses(@RequestHeader (value = "X-User-Id") @NonNull String userId){
         try {
             List<ExpenseDto> expenseDtos=expenseService.getAllExp(userId);
             return new ResponseEntity<>(expenseDtos, HttpStatus.OK);
@@ -25,7 +26,7 @@ public class ExpenseController {
         }
     }
     @PostMapping("/expenses")
-    public ResponseEntity<Boolean>createExpenses(@RequestParam ("userId") String userId,@RequestBody ExpenseDto expenseDto){
+    public ResponseEntity<Boolean>createExpenses(@RequestHeader (value = "X-User-Id") @NonNull String userId, @RequestBody ExpenseDto expenseDto){
         try {
             expenseDto.setUserId(userId);
 

@@ -1,5 +1,6 @@
 package com.mohit.expenseservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,12 +10,14 @@ import lombok.Setter;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Expense {
     @Id
     @Column(name = "id")
@@ -33,8 +36,15 @@ public class Expense {
     @Column(name = "created_at" , updatable=false)
     private Timestamp createdAt;
 
-    @PrePersist
+    @PreUpdate
     public void updatetime(){
         createdAt=Timestamp.from(Instant.now());
+    }
+
+    @PrePersist
+    public void generateExternalId(){
+        if(this.externalId==null){
+            this.externalId= UUID.randomUUID().toString();
+        }
     }
 }
